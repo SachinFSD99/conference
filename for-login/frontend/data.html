@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .nav {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="nav">
+        <h1>Notes app</h1>
+        <p id="username">User name</p>
+        <button id="myNotesBtn">My Notes</button>
+      </div>
+      <hr />
+      <div id="tasks">
+        <div class="card">
+          <h3>Task name</h3>
+          <p><strong>Completed</strong>: True</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+
+  
+
+  document.getElementById("username").innerText = `UserName: ${sessionStorage.getItem("UserName")}`
+
+
+  fetch("http://localhost:3500/note", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${sessionStorage.getItem("token")}`,
+    },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      document.getElementById("tasks").innerHTML = `
+      ${res.notes
+        .map((item) => {
+          return `
+            <div class="card">
+              <h3>${item.task}</h3>
+              <p><strong>Completed</strong>: ${item.completed}</p>
+              <button onclick=deleteNote("${item._id}")>Delete</button>
+            </div>
+            `;
+            })
+            .join("")}
+
+        `;
+    });
+
+async function deleteNote(id){
+  const del =await fetch(`http://localhost:3500/note/delete/${id}`,{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${sessionStorage.getItem("token")}`,
+    },
+    method:"DELETE"
+  })
+
+  const res = await del;
+  const data = await res.json()
+  console.log(data);
+}
+
+
+</script>
