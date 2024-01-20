@@ -7,8 +7,9 @@ const authenticator = (req, res, next) => {
     if (err) {
       res.status(401).json({ err,token:"Token Verification error" });
     } else {
-      console.log(decoded);
-      req.body.UserID = decoded.UserID;
+      
+      req.body.UserDetails = decoded.UserDetails
+      console.log("decoded=>",decoded);
       next();
     }
   });

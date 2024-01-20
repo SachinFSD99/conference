@@ -15,6 +15,8 @@ app.use(cors())
 app.use(express.json());
 
 app.get("/",async(req,res)=>{
+    // const filepath = path.resolve(__dirname+'../frontend/register.html')
+    // res.sendFile(filepath);
     const users =await RegisterModel.find();
     res.send(users);
 })
