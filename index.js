@@ -9,7 +9,7 @@ const { userRouter } = require("./routes/user.router");
 const { authenticator } = require("./middleware/authenticator.middleware");
 const { postRouter } = require("./routes/post.route");
 const { googleAuthRouter } = require("./auth/oauth.google");
-const { githubAuthRouter } = require("./auth/oauth.github");
+// const { githubAuthRouter } = require("./auth/oauth.github");
 const path = require("path");
 const hbs = require("hbs");
 const { registerRouter } = require("./routes/register.router");
@@ -45,7 +45,7 @@ app.use("/forgetpwd",forgetRouter)
 app.use("/user", userRouter);
 
 app.use("/auth", googleAuthRouter);
-app.use("/auth", githubAuthRouter);
+// app.use("/auth", githubAuthRouter);
 
 // app.use(authenticator);
 
