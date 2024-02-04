@@ -75,16 +75,28 @@ app.get("/", authenticator, async (req, res) => {
 });
 app.use("/posts", postRouter);
 
-app.get("/data", (req, res) => {
-  res.json({ task: "bath", time: "evening", Founder: "sachin" });
-});
-
-app.listen(process.env.port, async () => {
+const connectDB = async () => {
   try {
-    await connection;
-    console.log("Connected to db");
+    await connection
+    console.log(`MongoDB Connected`);
   } catch (error) {
     console.log(error);
+    process.exit(1);
   }
-  console.log(`Server running at ${process.env.port}`);
-});
+}
+
+connectDB().then(() => {
+  app.listen(process.env.port, () => {
+      console.log("listening for requests");
+  })
+})
+
+// app.listen(process.env.port, async () => {
+//   try {
+//     await connection;
+//     console.log("Connected to db");
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log(`Server running at ${process.env.port}`);
+// });
