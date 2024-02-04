@@ -75,18 +75,22 @@ app.get("/", authenticator, async (req, res) => {
 });
 app.use("/posts", postRouter);
 
+
+
+const PORT = process.env.port || 8080
+
 const connectDB = async () => {
   try {
     await connection
     console.log(`MongoDB Connected`);
   } catch (error) {
-    console.log(error);
+    console.log("EROOR in mongoDb ",error);
     process.exit(1);
   }
 }
 
 connectDB().then(() => {
-  app.listen(process.env.port, () => {
+  app.listen(PORT, () => {
       console.log("listening for requests");
   })
 })
