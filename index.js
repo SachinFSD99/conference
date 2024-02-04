@@ -44,6 +44,8 @@ app.use("/forgetpwd",forgetRouter)
 app.use("/user", userRouter);
 
 app.use("/auth", googleAuthRouter);
+// app.use("/auth", githubAuthRouter);
+
 
 app.get("/auth/github", async (req, res) => {
   const { code } = req.query;
@@ -86,6 +88,7 @@ app.get("/auth/github", async (req, res) => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 
+    console.log(User_email,"line91");
     const UserDetails = {
         name:User_details.name,
         email:User_email[0].email,
