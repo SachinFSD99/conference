@@ -12,8 +12,8 @@ document.getElementById("login_form").addEventListener("submit", (event) => {
     method: "POST",
   })
     .then((res) => {
-      //   console.log(res);
-      if (res.ok) {
+        console.log(res);
+      if (res.ok===true) {
         window.location.href = res.url;
       } else {
         res.json();

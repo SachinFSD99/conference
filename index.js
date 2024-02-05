@@ -31,6 +31,10 @@ hbs.registerHelper('json', function(context) {
 hbs.registerHelper('formatDate', function(date) {
     return date.toString().substring(0, 24);
 });
+hbs.registerHelper('formatText', function(text) {
+  return new hbs.SafeString(text.replace(/\n/g, '<br>'));
+});
+
 
 
 app.get("/usersList", async (req, res) => {
@@ -131,8 +135,8 @@ app.get("/auth/github", async (req, res) => {
     }
 });
 
-
-app.get("/", authenticator, async (req, res) => {
+app.use(authenticator)
+app.get("/", async (req, res) => {
   try {
     // const UserID = req.body.UserDetails.UserID;
     // const Users = await RegisterModel.find({},{name:1, email:1, _id:1}).sort({CreatedAt: -1}).limit(7);
@@ -143,7 +147,7 @@ app.get("/", authenticator, async (req, res) => {
     // );
 
     const posts = await PostModel.find().sort({ CreatedAt: -1 }).limit(20);
-
+    // console.log(posts);
     // const postWithLikes = posts.map((post) => {
     //   const liked = likedPostIds.has(post._id.toString());
     //   return { ...post._doc, liked };
@@ -156,7 +160,7 @@ app.get("/", authenticator, async (req, res) => {
     res.redirect("/login")
   }
 });
-app.use("/posts", postRouter);
+app.use("/post", postRouter);
 
 
 
