@@ -138,7 +138,7 @@ async function postText(text) {
   const fetched = await fetch("/post", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("token") || req.cookies.token}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
     method: "POST",
     body: JSON.stringify(obj),
